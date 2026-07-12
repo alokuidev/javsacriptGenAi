@@ -8,7 +8,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
   "dependencies": {
+    "dotenv": "^17.4.2",
+    "openai": "^6.46.0",
     "tiktoken": "^1.0.22"
   }
 }
