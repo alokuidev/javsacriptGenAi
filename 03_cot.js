@@ -1,7 +1,9 @@
 import {OpenAI} from "openai";
 
 const client = new OpenAI({
+
   apiKey: process.env.OPENAI_API_KEY,
+
 });
 const SYSTEM_PROMPT = `You are an expert assistant. Follow this pipeline when handling user requests:
 
