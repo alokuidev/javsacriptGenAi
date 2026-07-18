@@ -1,0 +1,21 @@
+Weather Report
+============
+
+City: Ranchi
+Weather: light rain
+Temp: 28.13 °C (Feels: 31.95 °C)
+Humidity: 77%
+Wind Speed: 3.2 m/s
+
+City: Patna
+Weather: overcast clouds
+Temp: 35.36 °C (Feels: 41.96 °C)
+Humidity: 51%
+Wind Speed: 4.32 m/s
+
+City: Delhi
+Weather: broken clouds
+Temp: 41.16 °C (Feels: 43.08 °C)
+Humidity: 25%
+Wind Speed: 3.92 m/s
+
