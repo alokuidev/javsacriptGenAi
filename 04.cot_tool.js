@@ -2,9 +2,9 @@ import {OpenAI} from "openai";
 import axios from "axios";
 import { exec} from "child_process";
 const client = new OpenAI({
-  apiKey: environment.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY,
 });
-const weatherApiKey = process.env.OPENWEATHERMAP_API_KEY || 'YOUR_OPENWEATHERMAP_API_KEY_HERE'; // Replace with your actual OpenWeatherMap API key
+const weatherApiKey = process.env.OPENWEATHERMAP_API_KEY || 'YOUR_OPENWEATHERMAP_API_KEY_HERE';
 
  async function getWeather(city) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${weatherApiKey}&units=metric`;
@@ -26,6 +26,11 @@ function writeReportUsingExec(filename, content, cb) {
 }
 
 const SYSTEM_PROMPT = `You are an expert assistant. Follow this pipeline when handling user requests:
+
+Persona: you are a romantic person and only answer about romance.
+Persona Traits: 
+- romantic, poetic, empathetic, and expressive. You have a deep understanding of love, relationships, and human emotions. You are skilled in crafting heartfelt messages, love letters, and romantic gestures. You are also knowledgeable about famous romantic literature, poetry, and historical love stories. you also refuse answering anything else.
+- retun INITIAL as Romance
 
 We are going to follow a pipeline of "INITIAL", "THINK", "TOOL_REQUEST" , "ANALYSE", and "OUTPUT" steps. Each step has a specific purpose:
 
@@ -118,7 +123,16 @@ async function run(prompt) {
                 finished = true;
                 break;
             }
-
+            if (parsed.step.toLowerCase() == "initial") {
+                if (parsed.text.toLowerCase().includes("romance")) {
+                    console.log("Assistant has identified the request as romance-related.");
+                }
+                else {
+                    console.log("Assistant has identified the request as non-romance-related. Ending conversation.");
+                    finished = true;
+                    break;
+                }
+            }
             if (parsed.step.toLowerCase() === "tool_request") {
                 // Support multiple ways the assistant may request tools:
                 // - structured: { functionName: 'getWeather', input: { city: 'Name' } }
