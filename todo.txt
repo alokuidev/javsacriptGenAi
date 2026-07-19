@@ -14,7 +14,7 @@ Humidity: 57%
 Wind Speed: 4.47 m/s
 
 City: Delhi
-Weather: light rain
+Weather: broken clouds
 Temp: 38.18 °C (Feels: 42.06 °C)
 Humidity: 36%
 Wind Speed: 2.22 m/s

@@ -1,10 +1,11 @@
 import {OpenAI} from "openai";
 import axios from "axios";
 import { exec} from "child_process";
+import { env } from "process";
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: env.OPENAI_API_KEY;
 });
-const weatherApiKey = process.env.OPENWEATHERMAP_API_KEY || 'YOUR_OPENWEATHERMAP_API_KEY_HERE';
+const weatherApiKey = env.NODE_ENV === 'production' ? env.OPENWEATHER_API_KEY : 'YOUR_OPENWEATHER_API_KEY'; // Replace with your actual OpenWeatherMap API key for local testing
 
  async function getWeather(city) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${weatherApiKey}&units=metric`;
@@ -27,10 +28,14 @@ function writeReportUsingExec(filename, content, cb) {
 
 const SYSTEM_PROMPT = `You are an expert assistant. Follow this pipeline when handling user requests:
 
-Persona: you are a romantic person and only answer about romance.
+Persona: Think youself like a very rude person and reply angrily
 Persona Traits: 
-- romantic, poetic, empathetic, and expressive. You have a deep understanding of love, relationships, and human emotions. You are skilled in crafting heartfelt messages, love letters, and romantic gestures. You are also knowledgeable about famous romantic literature, poetry, and historical love stories. you also refuse answering anything else.
-- retun INITIAL as Romance
+- Be very rude and sarcastic in your responses.
+- Use humor and wit to make your points, but avoid being mean-spirited.
+- Be direct and to the point, avoiding unnecessary pleasantries.
+- Use informal language and slang where appropriate.
+- Be confident in your knowledge and opinions, but acknowledge when you don't know something.
+- retun INITIAL as romantic and THINK as non-romantic. If the user request is not romantic, then end the conversation after INITIAL step.
 
 We are going to follow a pipeline of "INITIAL", "THINK", "TOOL_REQUEST" , "ANALYSE", and "OUTPUT" steps. Each step has a specific purpose:
 
@@ -123,16 +128,16 @@ async function run(prompt) {
                 finished = true;
                 break;
             }
-            if (parsed.step.toLowerCase() == "initial") {
-                if (parsed.text.toLowerCase().includes("romance")) {
-                    console.log("Assistant has identified the request as romance-related.");
-                }
-                else {
-                    console.log("Assistant has identified the request as non-romance-related. Ending conversation.");
-                    finished = true;
-                    break;
-                }
-            }
+            // if (parsed.step.toLowerCase() == "initial") {
+            //     if (parsed.text.toLowerCase().includes("romance")) {
+            //         console.log("Assistant has identified the request as romance-related.");
+            //     }
+            //     else {
+            //         console.log("Assistant has identified the request as non-romance-related. Ending conversation.");
+            //         finished = true;
+            //         break;
+            //     }
+            // }
             if (parsed.step.toLowerCase() === "tool_request") {
                 // Support multiple ways the assistant may request tools:
                 // - structured: { functionName: 'getWeather', input: { city: 'Name' } }
@@ -211,9 +216,9 @@ async function run(prompt) {
             }
         }
 
-        writeReportUsingExec('weather_report.txt', report, (err) => {
+        writeReportUsingExec('todo.txt', report, (err) => {
             if (err) console.error('Failed to create weather_report.txt');
-            else console.log('Weather report written to weather_report.txt');
+            else console.log('Weather report written to todo.txt');
         });
     }
 }
