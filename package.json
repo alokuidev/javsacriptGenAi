@@ -10,6 +10,7 @@
   "description": "",
   "type": "module",
   "dependencies": {
+    "@google-cloud/translate": "^10.1.0",
     "axios": "^1.18.1",
     "dotenv": "^17.4.2",
     "openai": "^6.46.0",

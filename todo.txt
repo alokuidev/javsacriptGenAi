@@ -1,21 +1,9 @@
 Weather Report
 ============
 
-City: Ranchi
-Weather: light rain
-Temp: 29.76 °C (Feels: 33.58 °C)
-Humidity: 66%
-Wind Speed: 2.51 m/s
+Raw: { city: "Ranchi", error: "Request failed with status code 401" }
 
-City: Patna
-Weather: overcast clouds
-Temp: 33.01 °C (Feels: 38.5 °C)
-Humidity: 57%
-Wind Speed: 4.47 m/s
+Raw: { city: "Patna", error: "Request failed with status code 401" }
 
-City: Delhi
-Weather: broken clouds
-Temp: 38.18 °C (Feels: 42.06 °C)
-Humidity: 36%
-Wind Speed: 2.22 m/s
+Raw: { city: "Delhi", error: "Request failed with status code 401" }
 
