@@ -22,14 +22,14 @@ const outputSchema = z.object({
 });
 
 async function init() {
-    const result = await client.responses.create({
+    const result = await client.responses.parse({
         model: "gpt-4o",
         text:{
             format: zodTextFormat(outputSchema, 'riskSchema'),
         },
         input: "Analyze the following text for potential risks and provide a summary: 'The new software update may introduce security vulnerabilities that could be exploited by hackers. Users should be cautious when installing the update.'",
     });
-    console.log(result.output_text);
+    console.log(result.output_parsed);
 }
 
 init().catch((error) => {
