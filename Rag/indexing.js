@@ -7,10 +7,13 @@ async function genarateEmbeddingsFromPDF(pdfFilePath) {
   //load the PDF file
   const loader = new PDFLoader(pdfFilePath);
   const docs = await loader.load();
-  //intialize the OpenAIEmbeddings with your API key
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("OPENAI_API_KEY is required");
+  }
+
   const embeddings = new OpenAIEmbeddings({
     modelName: "text-embedding-3-small",
-    apiKey: '',
+    apiKey: process.env.OPENAI_API_KEY,
   });
   //generate embeddings for the loaded documents
   const vectorStore = await QdrantVectorStore.fromExistingCollection(
