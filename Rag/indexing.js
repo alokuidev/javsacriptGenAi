@@ -7,9 +7,7 @@ async function genarateEmbeddingsFromPDF(pdfFilePath) {
   //load the PDF file
   const loader = new PDFLoader(pdfFilePath);
   const docs = await loader.load();
-  if (!process.env.OPENAI_API_KEY) {
-    throw new Error("OPENAI_API_KEY is required");
-  }
+  
 
   const embeddings = new OpenAIEmbeddings({
     modelName: "text-embedding-3-small",
