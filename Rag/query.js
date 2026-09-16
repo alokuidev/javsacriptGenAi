@@ -54,4 +54,4 @@ async function query(userQuery) {
     console.log("LLM Response:", llmResponse.choices[0].message.content);
 }
 
-query("What is PERSONAL COACHING?")
+query("How muc is FEES")
